@@ -1,4 +1,8 @@
 
 {
-  "extends": "@xbmlz"
+  "extends": "@xbmlz",
+  "rules": {
+    "no-console": "off",
+    "unicorn/no-array-push-push": "off"
+  }
 }
