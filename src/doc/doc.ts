@@ -1,8 +1,10 @@
 import { mkdirSync, readFile } from 'node:fs'
 import { createServer } from 'node:http'
 import { extname, join, resolve } from 'node:path'
-import type { DbInfo } from '../types'
+import chalk from 'chalk'
+import type { DbInfo, DocFmt } from '../types'
 import { generateDocsify } from './docsify'
+import { generateMarkdown } from './markdown'
 
 function getDocPath(db: string, fmt: string): string {
   const currentDir = process.cwd()
@@ -26,17 +28,28 @@ function runServer(docPath: string, port = 3333) {
       }
     })
   })
-  server.listen(port)
+  server.listen(port, () => {
+    console.log(chalk.green(`➜ Document is ready: http://127.0.0.1:${port} (Press CTRL+C to quit)`))
+  })
 }
 
-export function generateDoc(fmt: string, info: DbInfo) {
+function printGeneratePath(filePath: string) {
+  console.log(chalk.green(`➜ Document is generated: ${filePath}`))
+  process.exit(0)
+}
+
+export function generateDoc(fmt: DocFmt, info: DbInfo) {
   const docPath = getDocPath(info.name, fmt)
   switch (fmt) {
     case 'docsify':
       generateDocsify(docPath, info)
       runServer(docPath)
       break
+    case 'markdwon':
+      printGeneratePath(generateMarkdown(docPath, info))
+      break
     default:
+      console.log(chalk.red(`Unsupported document format: ${fmt}`))
       process.exit(1)
   }
 }

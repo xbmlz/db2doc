@@ -1,4 +1,4 @@
-export type docType = 'docsify' | 'markdwon' | 'html' | 'docx' | 'excel' | 'pdf'
+export type DocFmt = 'docsify' | 'markdwon' | 'html' | 'docx' | 'excel' | 'pdf'
 
 export type ColorFunc = (str: string | number) => string
 

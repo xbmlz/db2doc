@@ -3,6 +3,7 @@ import figlet from 'figlet'
 import { DIALECTS, DOC_TYPES } from './data'
 import Database from './db'
 import { generateDoc } from './doc/doc'
+import type { DocFmt } from './types'
 
 figlet('db2doc', async (err, result) => {
   if (err) {
@@ -87,7 +88,7 @@ figlet('db2doc', async (err, result) => {
   })
 
   // doc type
-  const { docFmt } = await inquirer.prompt<{ docFmt: string }>({
+  const { docFmt } = await inquirer.prompt<{ docFmt: DocFmt }>({
     name: 'docFmt',
     type: 'list',
     message: 'Select a doc format:',

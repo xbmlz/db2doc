@@ -47,8 +47,7 @@ export default class Database {
     let sql = ''
     let dbs = []
     if (this.opts.dialect === 'mysql') {
-      sql =
-        'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA order by SCHEMA_NAME asc'
+      sql = 'SELECT SCHEMA_NAME FROM information_schema.SCHEMATA order by SCHEMA_NAME asc'
     }
     const [results] = await this.sequelize.query(sql)
     for (const res in results) {
@@ -100,9 +99,9 @@ export default class Database {
       columns[i].isPK = columns[i].isPK ? 'PK' : ''
       columns[i].isIdentity = columns[i].isIdentity ? 'Y' : ''
       columns[i].isNullable = columns[i].isNullable ? 'Y' : 'N'
-      columns[i].defaultVal =
-        columns[i].defaultVal === null ? '' : columns[i].defaultVal
+      columns[i].defaultVal = columns[i].defaultVal === null ? '' : columns[i].defaultVal
     }
+
     return columns
   }
 

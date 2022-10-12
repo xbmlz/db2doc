@@ -1,31 +1,38 @@
-import { writeFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import fs from 'node:fs'
+import path from 'node:path'
 import type { DbInfo } from '../types'
 
 const DOCSIFY_HTML = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Database Document</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="description" content="Description">
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<link rel="stylesheet" href="//cdn.staticfile.org/docsify/4.12.1/themes/vue.min.css">
+  <meta charset="UTF-8">
+  <title>Database Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <!-- Themes (light + dark) -->
+  <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+  <link rel="stylesheet" media="(prefers-color-scheme: light)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 </head>
 <body>
-<div data-app id="main">加载中</div>
-<script>
-	window.$docsify = {
-		el: '#main',
-		name: '',
-		repo: '',
-		search: 'auto',
-		loadSidebar: true
-	}
-</script>
-<script src="//cdn.staticfile.org/docsify/4.12.1/docsify.min.js"></script>
-<script src="//cdn.staticfile.org/docsify/4.12.1/plugins/search.min.js"></script>
+  <div data-app id="main">加载中</div>
+  <script>
+    window.$docsify = {
+      el: '#main',
+      name: '',
+      repo: '',
+      search: 'auto',
+      loadSidebar: true
+    }
+  </script>
+  <!-- Required -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
+
+  <!-- Recommended -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
 </body>
 </html>
 `
@@ -45,15 +52,12 @@ export function generateDocsify(docPath: string, info: DbInfo) {
   // 表
   for (const i in info.tables) {
     const t = info.tables[i]
-    sidebarMd.push(`* [${t.name}(${t.comment})](${t.name}.md)`)
+    const title = t.comment ? `${t.name}(${t.comment})` : `${t.name}`
+    sidebarMd.push(`* [${title}](${t.name}.md)`)
     const tableMd: string[] = []
-    tableMd.push(`### ${t.name}(${t.comment})`, '')
-    tableMd.push(
-      '| 列名 | 类型 | 长度 | 小数位 | 键 | 自增 | 不为空 | 默认值 | 注释 |'
-    )
-    tableMd.push(
-      '| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | '
-    )
+    tableMd.push(`### ${title}`, '')
+    tableMd.push('| 列名 | 类型 | 长度 | 小数位 | 键 | 自增 | 不为空 | 默认值 | 注释 |')
+    tableMd.push('| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ')
     for (const j in t.columns) {
       const c = t.columns[j]
       tableMd.push(
@@ -62,16 +66,16 @@ export function generateDocsify(docPath: string, info: DbInfo) {
     }
     const tableStr = tableMd.join('\r\n')
     // create [tablename].md
-    writeFileSync(resolve(docPath, `${t.name}.md`), tableStr)
+    fs.writeFileSync(path.resolve(docPath, `${t.name}.md`), tableStr)
   }
   // create readme.md
   const readmeMdStr = readmeMd.join('\r\n')
-  writeFileSync(resolve(docPath, 'README.md'), readmeMdStr)
+  fs.writeFileSync(path.resolve(docPath, 'README.md'), readmeMdStr)
   // create _sidebar.md
   const sidebarStr = sidebarMd.join('\r\n')
-  writeFileSync(resolve(docPath, '_sidebar.md'), sidebarStr)
+  fs.writeFileSync(path.resolve(docPath, '_sidebar.md'), sidebarStr)
   // create index.html
-  writeFileSync(resolve(docPath, 'index.html'), DOCSIFY_HTML)
+  fs.writeFileSync(path.resolve(docPath, 'index.html'), DOCSIFY_HTML)
   // create .nojekyll
-  writeFileSync(resolve(docPath, '.nojekyll'), '')
+  fs.writeFileSync(path.resolve(docPath, '.nojekyll'), '')
 }

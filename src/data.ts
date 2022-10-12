@@ -39,7 +39,7 @@ export const DOC_TYPES: DocType[] = [
   },
   {
     name: 'Markdown',
-    value: 'md',
+    value: 'markdwon',
     mode: 'local',
     color: chalk.cyan,
   },
