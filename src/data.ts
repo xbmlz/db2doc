@@ -22,7 +22,7 @@ export const DOC_TYPES: DocTypes[] = [
   {
     name: 'Site',
     value: 'docsify',
-    color: chalk.yellow,
+    color: chalk.magenta,
   },
   {
     name: 'Excel',
