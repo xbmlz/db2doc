@@ -3,7 +3,7 @@ import figlet from 'figlet'
 import { DIALECTS, DOC_TYPES } from './data'
 import Database from './db'
 import { generateDoc } from './doc/doc'
-import type { DocFmt } from './types'
+import type { DocType } from './types'
 
 figlet('db2doc', async (err, result) => {
   if (err) {
@@ -71,28 +71,12 @@ figlet('db2doc', async (err, result) => {
     choices: dbs,
   })
 
-  const { docMode } = await inquirer.prompt<{ docMode: string }>({
-    name: 'docMode',
-    type: 'list',
-    message: 'Select a doc mode',
-    choices: [
-      {
-        name: 'Server(Browse documents online)',
-        value: 'server',
-      },
-      {
-        name: 'Local(Generate documents locally)',
-        value: 'local',
-      },
-    ],
-  })
-
   // doc type
-  const { docFmt } = await inquirer.prompt<{ docFmt: DocFmt }>({
-    name: 'docFmt',
+  const { docType } = await inquirer.prompt<{ docType: DocType }>({
+    name: 'docType',
     type: 'list',
-    message: 'Select a doc format:',
-    choices: DOC_TYPES.filter((doc) => doc.mode === docMode).map((doc) => {
+    message: 'Select a doc type:',
+    choices: DOC_TYPES.map((doc) => {
       const docColor = doc.color
       return {
         name: docColor(doc.name),
@@ -103,7 +87,7 @@ figlet('db2doc', async (err, result) => {
 
   const dbInfo = await db.getDbInfo(database)
 
-  generateDoc(docFmt, dbInfo)
+  generateDoc(docType, dbInfo)
   // console.log(dbs)
   // const opts = await inquirer.prompt(prompts)
   // console.log(dialect, host, port, user, password, database, docMode, docFmt)

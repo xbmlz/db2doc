@@ -1,11 +1,10 @@
-export type DocFmt = 'docsify' | 'markdwon' | 'html' | 'docx' | 'excel' | 'pdf'
+export type DocType = 'docsify' | 'markdwon' | 'html' | 'docx' | 'excel' | 'pdf'
 
 export type ColorFunc = (str: string | number) => string
 
-export interface DocType {
+export interface DocTypes {
   name: string
   value: string
-  mode: string
   color: ColorFunc
 }
 

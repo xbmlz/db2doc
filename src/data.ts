@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import type { DbDialect, DocType } from './types'
+import type { DbDialect, DocTypes } from './types'
 
 export const DIALECTS: DbDialect[] = [
   {
@@ -18,41 +18,30 @@ export const DIALECTS: DbDialect[] = [
   },
 ]
 
-export const DOC_TYPES: DocType[] = [
+export const DOC_TYPES: DocTypes[] = [
+  {
+    name: 'Site',
+    value: 'docsify',
+    color: chalk.yellow,
+  },
   {
     name: 'Excel',
     value: 'xlsx',
-    mode: 'local',
     color: chalk.green,
   },
   {
     name: 'Word',
     value: 'docx',
-    mode: 'local',
     color: chalk.blue,
   },
   {
     name: 'Html',
     value: 'html',
-    mode: 'local',
     color: chalk.red,
   },
   {
     name: 'Markdown',
     value: 'markdwon',
-    mode: 'local',
     color: chalk.cyan,
-  },
-  {
-    name: 'Docsify',
-    value: 'docsify',
-    mode: 'server',
-    color: chalk.green,
-  },
-  {
-    name: 'Gitbook',
-    value: 'gitbook',
-    mode: 'server',
-    color: chalk.blue,
   },
 ]

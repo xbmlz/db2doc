@@ -47,15 +47,18 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "axios": "^1.1.2",
     "chalk": "^5.1.0",
     "figlet": "^1.5.2",
     "inquirer": "^9.1.2",
+    "markdown-it": "^13.0.1",
     "mysql2": "^2.3.3",
     "sequelize": "^6.24.0"
   },
   "devDependencies": {
     "@types/figlet": "^1.5.5",
     "@types/inquirer": "^9.0.2",
+    "@types/markdown-it": "^12.2.3",
     "@types/node": "^18.7.23",
     "@types/sequelize": "^4.28.14",
     "@xbmlz/eslint-config": "^0.1.15",

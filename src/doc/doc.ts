@@ -2,13 +2,14 @@ import { mkdirSync, readFile } from 'node:fs'
 import { createServer } from 'node:http'
 import { extname, join, resolve } from 'node:path'
 import chalk from 'chalk'
-import type { DbInfo, DocFmt } from '../types'
+import type { DbInfo, DocType } from '../types'
 import { generateDocsify } from './docsify'
 import { generateMarkdown } from './markdown'
+import { generateHtml } from './html'
 
-function getDocPath(db: string, fmt: string): string {
+function getDocPath(db: string, docType: string): string {
   const currentDir = process.cwd()
-  const docPath = resolve(currentDir, 'dist', db, fmt)
+  const docPath = resolve(currentDir, 'dist', db, docType)
   mkdirSync(docPath, { recursive: true })
   return docPath
 }
@@ -38,9 +39,9 @@ function printGeneratePath(filePath: string) {
   process.exit(0)
 }
 
-export function generateDoc(fmt: DocFmt, info: DbInfo) {
-  const docPath = getDocPath(info.name, fmt)
-  switch (fmt) {
+export async function generateDoc(docType: DocType, info: DbInfo) {
+  const docPath = getDocPath(info.name, docType)
+  switch (docType) {
     case 'docsify':
       generateDocsify(docPath, info)
       runServer(docPath)
@@ -48,8 +49,11 @@ export function generateDoc(fmt: DocFmt, info: DbInfo) {
     case 'markdwon':
       printGeneratePath(generateMarkdown(docPath, info))
       break
+    case 'html':
+      printGeneratePath(await generateHtml(docPath, info))
+      break
     default:
-      console.log(chalk.red(`Unsupported document format: ${fmt}`))
+      console.log(chalk.red(`Unsupported document type: ${docType}`))
       process.exit(1)
   }
 }
