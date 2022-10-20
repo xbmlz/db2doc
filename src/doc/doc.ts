@@ -3,9 +3,11 @@ import { createServer } from 'node:http'
 import { extname, join, resolve } from 'node:path'
 import chalk from 'chalk'
 import type { DbInfo, DocType } from '../types'
-import { generateDocsify } from './docsify'
+import { generateDocsify } from './site'
 import { generateMarkdown } from './markdown'
 import { generateHtml } from './html'
+// import { generateWord } from './word'
+import { generatePdf } from './pdf'
 
 function getDocPath(db: string, docType: string): string {
   const currentDir = process.cwd()
@@ -42,7 +44,7 @@ function printGeneratePath(filePath: string) {
 export async function generateDoc(docType: DocType, info: DbInfo) {
   const docPath = getDocPath(info.name, docType)
   switch (docType) {
-    case 'docsify':
+    case 'site':
       generateDocsify(docPath, info)
       runServer(docPath)
       break
@@ -51,6 +53,12 @@ export async function generateDoc(docType: DocType, info: DbInfo) {
       break
     case 'html':
       printGeneratePath(await generateHtml(docPath, info))
+      break
+    case 'word':
+      // printGeneratePath(await generateWord(docPath, info))
+      break
+    case 'pdf':
+      printGeneratePath(await generatePdf(docPath, info))
       break
     default:
       console.log(chalk.red(`Unsupported document type: ${docType}`))

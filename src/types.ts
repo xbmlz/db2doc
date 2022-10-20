@@ -1,4 +1,4 @@
-export type DocType = 'docsify' | 'markdwon' | 'html' | 'docx' | 'excel' | 'pdf'
+export type DocType = 'site' | 'markdwon' | 'html' | 'word' | 'excel' | 'pdf'
 
 export type ColorFunc = (str: string | number) => string
 
@@ -45,6 +45,7 @@ export interface TableInfo {
 
 export interface DbInfo {
   name: string
+  time: string
   dialect: string
   version: string
   charset: string

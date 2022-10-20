@@ -5,7 +5,7 @@ import axios from 'axios'
 import type { DbInfo } from '../types'
 import { renderMarkdown } from './markdown'
 
-export async function generateHtml(docPath: string, info: DbInfo): Promise<string> {
+export async function renderHtml(info: DbInfo): Promise<string> {
   const res = await axios.get('https://cdn.jsdelivr.net/npm/github-markdown-css@5.1.0/github-markdown.css')
   const githubCss = res.data
 
@@ -50,6 +50,11 @@ export async function generateHtml(docPath: string, info: DbInfo): Promise<strin
   </body>
   </html>
   `
+  return htmlStr
+}
+
+export async function generateHtml(docPath: string, info: DbInfo): Promise<string> {
+  const htmlStr = await renderHtml(info)
   const mdPath = path.resolve(docPath, `${info.name}.html`)
   fs.writeFileSync(mdPath, htmlStr)
   return mdPath

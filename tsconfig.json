@@ -1,14 +1,14 @@
 {
+  "include": ["src", "__tests__"],
   "compilerOptions": {
-    "target": "es2018",
-    "module": "esnext",
-    "lib": ["esnext"],
-    "moduleResolution": "node",
-    "esModuleInterop": true,
+    "outDir": "dist",
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "Node",
     "strict": true,
-    "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true
+    "declaration": false,
+    "sourceMap": false,
+    "noUnusedLocals": true,
+    "esModuleInterop": true
   }
 }

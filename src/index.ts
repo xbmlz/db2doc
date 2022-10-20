@@ -1,15 +1,65 @@
 import inquirer from 'inquirer'
 import gradient from 'gradient-string'
-import { DIALECTS, DOC_TYPES } from './data'
-import Database from './db'
+import chalk from 'chalk'
+import Database from './db/db'
 import { generateDoc } from './doc/doc'
-import type { DocType } from './types'
+import type { DbDialect, DocType, DocTypes } from './types'
 
 const banner = gradient([
   { color: '#42d392', pos: 0 },
   { color: '#42d392', pos: 0.1 },
   { color: '#647eff', pos: 1 },
 ])('db2doc - The Fast Database Document Generator')
+
+const DIALECTS: DbDialect[] = [
+  {
+    name: 'MySQL',
+    value: 'mysql',
+    port: 3306,
+    user: 'root',
+    color: chalk.green,
+  },
+  {
+    name: 'PostgreSQL',
+    value: 'postgres',
+    port: 5432,
+    user: 'postgres',
+    color: chalk.blue,
+  },
+]
+
+const DOC_TYPES: DocTypes[] = [
+  {
+    name: 'Site',
+    value: 'site',
+    color: chalk.magenta,
+  },
+  {
+    name: 'Excel',
+    value: 'excel',
+    color: chalk.green,
+  },
+  {
+    name: 'Word',
+    value: 'word',
+    color: chalk.blue,
+  },
+  {
+    name: 'Html',
+    value: 'html',
+    color: chalk.red,
+  },
+  {
+    name: 'Markdown',
+    value: 'markdwon',
+    color: chalk.cyan,
+  },
+  {
+    name: 'PDF',
+    value: 'pdf',
+    color: chalk.grey,
+  },
+]
 
 async function init() {
   console.log(`\n${banner}\n`)

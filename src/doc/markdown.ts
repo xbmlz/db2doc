@@ -7,9 +7,12 @@ export function renderMarkdown(info: DbInfo): string {
   // 标题
   mdArr.push(`# ${info.name} 数据库文档`, '')
   mdArr.push('## 基础信息', '')
-  mdArr.push('| 名称 | 版本 | 字符集 | 排序规则 |')
-  mdArr.push('| ---- | ---- | ---- | ---- |')
-  mdArr.push(`| ${info.name} | ${info.dialect}-${info.version} | ${info.charset} | ${info.collation} |`, '')
+  mdArr.push('| 名称 | 版本 | 字符集 | 排序规则 | 创建时间 |')
+  mdArr.push('| ---- | ---- | ---- | ---- | ---- |')
+  mdArr.push(
+    `| ${info.name} | ${info.dialect}-${info.version} | ${info.charset} | ${info.collation} | ${info.time} |`,
+    ''
+  )
   // 表总览
   mdArr.push('## 表目录', '')
   mdArr.push('| 序号 | 表名 | 描述 |')
