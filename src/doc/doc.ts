@@ -6,8 +6,8 @@ import type { DbInfo, DocType } from '../types'
 import { generateDocsify } from './site'
 import { generateMarkdown } from './markdown'
 import { generateHtml } from './html'
-// import { generateWord } from './word'
 import { generatePdf } from './pdf'
+import { generateWord } from './word'
 
 function getDocPath(db: string, docType: string): string {
   const currentDir = process.cwd()
@@ -55,7 +55,7 @@ export async function generateDoc(docType: DocType, info: DbInfo) {
       printGeneratePath(await generateHtml(docPath, info))
       break
     case 'word':
-      // printGeneratePath(await generateWord(docPath, info))
+      printGeneratePath(await generateWord(docPath, info))
       break
     case 'pdf':
       printGeneratePath(await generatePdf(docPath, info))

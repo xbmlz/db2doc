@@ -5,7 +5,7 @@ import Database from './db/db'
 import { generateDoc } from './doc/doc'
 import type { DbDialect, DocType, DocTypes } from './types'
 
-const banner = gradient([
+const BANNER = gradient([
   { color: '#42d392', pos: 0 },
   { color: '#42d392', pos: 0.1 },
   { color: '#647eff', pos: 1 },
@@ -62,7 +62,7 @@ const DOC_TYPES: DocTypes[] = [
 ]
 
 async function init() {
-  console.log(`\n${banner}\n`)
+  console.log(`\n${BANNER}\n`)
   try {
     // dialect
     const { dialect } = await inquirer.prompt<{ dialect: string }>({
